@@ -11,7 +11,21 @@ const performScraping = async () => {
     },
   });
 
-  console.log(response.data);
+  const $ = cheerio.load(response.data);
+
+  $('.elementor-element-7942181b')
+    .find('.e-con')
+    .each((index, element) => {
+      // extracting the data of interest
+      const pageUrl = $(element).attr('href');
+      const image = $(element)
+        .find('.elementor-image-box-img img')
+        .attr('data-lazy-src');
+      const name = $(element)
+        .find('.elementor-image-box-content .elementor-image-box-title')
+        .text();
+      console.log(name, image, pageUrl);
+    });
 };
 
 performScraping();
